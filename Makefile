@@ -37,12 +37,13 @@ INCLUDE = -I./
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-%.o: %.c
-	@make -C $(LIBFT_DIR) bonus
-	$(CC) $(CFLAGS) -MMD $(INCLUDE) -c $< -o $@
+all: makelibft $(NAME_SERVER) $(NAME_CLIENT)
 
-all: $(NAME_SERVER) $(NAME_CLIENT)
-	@make -C $(LIBFT_DIR) bonus
+makelibft:
+	@make --no-print-directory -C $(LIBFT_DIR)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -MMD $(INCLUDE) -c $< -o $@
 
 $(NAME_SERVER): $(OBJS_SERVER) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT_DIR)$(LIBFT) -o $@
@@ -52,9 +53,8 @@ $(NAME_CLIENT): $(OBJS_CLIENT) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_CLIENT) $(LIBFT_DIR)$(LIBFT) -o $@
 -include $(DEPS_CLIENT)
 
-bonus: $(NAME_SERVER_BONUS) $(NAME_CLIENT_BONUS)
-	@make -C $(LIBFT_DIR) bonus
-
+bonus: makelibft $(NAME_SERVER_BONUS) $(NAME_CLIENT_BONUS)
+	
 $(NAME_SERVER_BONUS): $(OBJS_SERVER_BONUS) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) $(LIBFT_DIR)$(LIBFT) -o $@
 -include $(DEPS_SERVER_BONUS)
@@ -64,12 +64,14 @@ $(NAME_CLIENT_BONUS): $(OBJS_CLIENT_BONUS) $(LIBFT_DIR)$(LIBFT)
 -include $(DEPS_CLIENT_BONUS)
 	
 clean:
-	@make clean -C $(LIBFT_DIR)
+	@make clean --no-print-directory -C $(LIBFT_DIR)
 	$(RM) $(OBJS_SERVER) $(OBJS_CLIENT) $(DEPS_SERVER) $(DEPS_CLIENT)
 	$(RM) $(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS) $(DEPS_SERVER_BONUS) $(DEPS_CLIENT_BONUS)
 	
-fclean: clean
-	@make fclean -C $(LIBFT_DIR)
+fclean:
+	@make fclean --no-print-directory -C $(LIBFT_DIR)	
+	$(RM) $(OBJS_SERVER) $(OBJS_CLIENT) $(DEPS_SERVER) $(DEPS_CLIENT)
+	$(RM) $(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS) $(DEPS_SERVER_BONUS) $(DEPS_CLIENT_BONUS)
 	$(RM) $(NAME_SERVER) $(NAME_CLIENT)	$(NAME_SERVER_BONUS) $(NAME_CLIENT_BONUS) 
 
 re: fclean all

@@ -40,7 +40,7 @@ void	ft_print_info(char *s)
 	write (1, "\n", 1);
 }
 
-int	ft_atoi(char *s)
+int	ft_atoi_mt(char *s)
 {
 	int	nbr;
 
@@ -93,7 +93,7 @@ int	main(int argc, char **argv)
 	if (argc == 3)
 	{
 		i = 0;
-		pid = ft_atoi(argv[1]);
+		pid = ft_atoi_mt(argv[1]);
 		timer(0);
 		while (argv[2][i] != '\0')
 			ft_asc_to_bin(pid, argv[2][i++]);

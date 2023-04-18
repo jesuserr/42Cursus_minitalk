@@ -32,7 +32,7 @@ void	timer(int action)
 	}
 }
 
-int	ft_atoi(char *s)
+int	ft_atoi_mt(char *s)
 {
 	int	nbr;
 
@@ -107,7 +107,7 @@ int	main(int argc, char **argv)
 		if (sigaction(SIGUSR1, &action, NULL) == -1)
 			ft_error_handler(ERROR_SIG_HANDLER);
 		i = 0;
-		pid = ft_atoi(argv[1]);
+		pid = ft_atoi_mt(argv[1]);
 		timer(0);
 		while (argv[2][i] != '\0')
 			ft_asc_to_bin(pid, argv[2][i++]);
