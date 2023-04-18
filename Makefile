@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/01 17:30:23 by marvin            #+#    #+#              #
-#    Updated: 2023/04/01 17:30:23 by marvin           ###   ########.fr        #
+#    Updated: 2023/04/18 17:37:32 by jesuserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,11 +38,11 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) bonus
 	$(CC) $(CFLAGS) -MMD $(INCLUDE) -c $< -o $@
 
 all: $(NAME_SERVER) $(NAME_CLIENT)
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) bonus
 
 $(NAME_SERVER): $(OBJS_SERVER) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_SERVER) $(LIBFT_DIR)$(LIBFT) -o $@
@@ -53,7 +53,7 @@ $(NAME_CLIENT): $(OBJS_CLIENT) $(LIBFT_DIR)$(LIBFT)
 -include $(DEPS_CLIENT)
 
 bonus: $(NAME_SERVER_BONUS) $(NAME_CLIENT_BONUS)
-	@make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR) bonus
 
 $(NAME_SERVER_BONUS): $(OBJS_SERVER_BONUS) $(LIBFT_DIR)$(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) $(LIBFT_DIR)$(LIBFT) -o $@
